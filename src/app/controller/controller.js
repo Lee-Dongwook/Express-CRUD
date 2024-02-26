@@ -8,6 +8,13 @@ exports.create = async(req, res) => {
             });
             return;
         }
+
+        const existingData = await crudModel.findOne({name: req.body.name});
+
+        if(existingData) {
+            res.status(400).json({message: 'Duplicate Data!'});
+            return;
+        }
     
         const crud = new crudModel({
             name: req.body.name,
